@@ -49,6 +49,12 @@ class InvalidStringError extends Error {
         super(message)
     }
 }
+class PartialInvalidStringError extends Error{
+    constructor(message, partialResult){
+        super(message);
+        this.partialResult = partialResult
+    }
+}
 
 function parseStringtoNumbre(string) {
     if (string.length === 0) {
@@ -80,9 +86,6 @@ try {
 
 
 }
-
-
-
 // if (isNaN(age)) {
 //     console.log("couldnt convert");
 // } else {
@@ -94,3 +97,43 @@ try {
 // console.log(parseStringtoNumbre("2,1"));
 // console.log(parseStringtoNumbre("2p"));
 // console.log(parseStringtoNumbre("p2"));
+
+class StringParser {
+    static parseCSVLine(string) {
+        if (string.length === 0) {
+            throw new EmptyStringError("empty string man")
+        }
+        let stringnum = string
+        if (string.includes(",")) {
+            stringnum = string.replace(",", ".") 
+        }
+        const numb = parseFloat(stringnum)
+        // for (const i of string) {
+        //     if (typeof string[i] === "number") {
+                
+        //     } else {
+        //         throw new InvalidStringError("string not valid!!!!!!!")
+        //     }
+        // }
+
+        if (isNaN(numb)) {
+            throw new InvalidStringError("string not valid!!!!!!!")
+        }
+        return stringnum.split(";")
+    }
+}
+
+// try {
+//    parseCSVLine(string)
+// } catch (error) {
+//     if (!(error instanceof InvalidStringError)) {
+//         throw error
+//     }
+// }
+
+const str1 = "12;34;12.5;567;11,1"
+const str2 = "false;34;pippo;567;11,1"
+const str3 = "a;b;c;d"
+
+const parsed = StringParser.parseCSVLine(str1)
+console.log(parsed);
