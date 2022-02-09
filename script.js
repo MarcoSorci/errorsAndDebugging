@@ -101,6 +101,7 @@ try {
 class StringParser {
     static parseCSVLine(string) {
         if (string.length === 0) {
+            /* This code is throwing an error. */
             throw new EmptyStringError("empty string man")
         }
         let stringnum = string
