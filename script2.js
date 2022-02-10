@@ -122,7 +122,10 @@ class Parser {
         let parsedArray = []
         let stringNumber = string
         stringNumber = (string.replace(/[,]+/, ".")).replace(/[ ]/g, "")
-        parsedArray = stringNumber.split(";")
+        if (stringNumber.length > 0) {
+            parsedArray = stringNumber.split(";")
+        }
+        
 
         let rightCount = 0
         let newArray = []
@@ -130,23 +133,20 @@ class Parser {
             const element = parsedArray[i];
             if (!isNaN(element)) {
                 rightCount++
-                newArray.push(element)
+                newArray.push(parseFloat(element))
             }
         }
 
-        if (parsedArray.length === rightCount) {
+        if (newArray.length === 0) {
+            throw new EmptyStringError("The string is empty")             
+        } else if (parsedArray.length === rightCount) {
             console.log("the string has been fully parsed");
         } else if (rightCount > 0 && rightCount < parsedArray.length) {
-            throw new PartialInvalidStringError("Partially invalid string, the result was: " + newArray)
+            throw new PartialInvalidStringError("Partially invalid string, the result was: " + (this.partialResult = newArray))
         } else if (rightCount = 0) {
             throw new InvalidStringError("The entire string is invalid")
         }
-
-        if (newArray.length === 0) {
-            throw new EmptyStringError("The string is empty")              //does not return empty error
-        } else {
-            return newArray
-        }
+        return newArray
 
     }
 }
@@ -157,14 +157,14 @@ class PartialInvalidStringError extends Error {
         this.partialResult = partialResult
     }
 }
-// try {
-//     Parser.stringparser(csvString2)
-// } catch (error) {
-//     console.log(error.message);
-//     if (error instanceof PartialInvalidStringError) {
-//         newArray = error.partialResult
-//     }
-// }
+try {
+    Parser.stringparser(csvString2)
+} catch (error) {
+    console.log(error.message);
+    if (error instanceof PartialInvalidStringError) {
+        newArray = error.partialResult
+    }
+}
 //console.log(Parser.stringparser(csvString2)); 
 
 /*"12; 13; 45; 23\n
