@@ -186,7 +186,7 @@ let listie = "12; 13; 45; 23\n 2.1; 13; 34; 21\n 3.2; 12; 4; 22\n"
 function newparse1(string) {
     let parsedArray = []
     let stringNumber = string
-    stringNumber = ((string.replace(/[ ]/g, ""))).replace(/\n/, ";")
+    stringNumber = (string.replace(/[ ]/g, ""))
     parsedArray = stringNumber.split(/[\n;]+/)
     return parsedArray
 }
@@ -197,8 +197,9 @@ function newparse2(string) {
     let parsedArray = []
     let stringNumber = string
     stringNumber = string.replace(/[ ]/g, "")
-    parsedArray = stringNumber.split(/[\n;]+/)
-    return parsedArray
+    parsedArray = stringNumber.split(";").toString()
+    finalArray = parsedArray.split(/[\n]/)
+    return finalArray
 }
 
 console.log(newparse2(listie));
