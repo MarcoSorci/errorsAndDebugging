@@ -181,7 +181,7 @@ paperino; 11; bertani; 2\n"
 */
 
 
-let listie = "12; 13; 45; 23\n 2.1; 13; 34; 21\n 3.2; 12; 4; 22\n"
+let listie = "12; 13; 45; 23\n 2.1; 13; 34; 21\n 3.2; 12; 4; 22"
 
 function newparse1(string) {
     let parsedArray = []
@@ -205,6 +205,4 @@ function newparse2(string) {
 console.log(newparse2(listie));
 
 let listObjs = "name; age; school; grade\npippo; 13; colombo; 3\npluto; 12; leopardi; 2\npaperino; 11; bertani; 2\n"
-let s = JSON.stringify(listObjs)
-let sj = JSON.parse(s, (key, value)=>{return value;}) //??????????
-console.log(sj);
+//solution in consoleApp repository
